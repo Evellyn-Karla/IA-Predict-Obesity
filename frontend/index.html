@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Predição de Obesidade</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .form-control,
+      .form-select {
+        margin-bottom: 15px;
+      }
+      #result {
+        margin-top: 20px;
+      }
+      .card {
+        margin-bottom: 20px;
+      }
+      .spinner-border {
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+      .list-group-item {
+        padding: 0.75rem 1.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Predição de Obesidade</h1>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h5>Dados do Paciente</h5>
+            </div>
+            <div class="card-body">
+              <form id="predictionForm">
+                <!-- Dados Pessoais -->
+                <div class="mb-3">
+                  <label for="age" class="form-label">Idade</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="age"
+                    min="14"
+                    max="100"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="gender" class="form-label">Gênero</label>
+                  <select class="form-select" id="gender" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="Male">Masculino</option>
+                    <option value="Female">Feminino</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="height" class="form-label">Altura (metros)</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    class="form-control"
+                    id="height"
+                    min="1.40"
+                    max="2.20"
+                    required
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <label for="weight" class="form-label">Peso (kg)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    class="form-control"
+                    id="weight"
+                    min="40"
+                    max="200"
+                    required
+                  />
+                </div>
+
+                <!-- Hábitos de Saúde -->
+                <div class="mb-3">
+                  <label for="faf" class="form-label"
+                    >Frequência de atividade física (0-3)</label
+                  >
+                  <input
+                    type="number"
+                    min="0"
+                    max="3"
+                    class="form-control"
+                    id="faf"
+                    required
+                  />
+                  <small class="text-muted"
+                    >0 = Nenhuma, 1 = 1-2 dias/semana, 2 = 3-4 dias/semana, 3 =
+                    5+ dias/semana</small
+                  >
+                </div>
+
+                <div class="mb-3">
+                  <label for="smoke" class="form-label"
+                    >Fuma regularmente?</label
+                  >
+                  <select class="form-select" id="smoke" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="favc" class="form-label"
+                    >Consome alimentos calóricos frequentemente?</label
+                  >
+                  <select class="form-select" id="favc" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="family_history" class="form-label"
+                    >Histórico familiar de sobrepeso?</label
+                  >
+                  <select class="form-select" id="family_history" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="yes">Sim</option>
+                    <option value="no">Não</option>
+                  </select>
+                </div>
+
+                <!-- Novos Campos Adicionados -->
+                <div class="mb-3">
+                  <label for="caec" class="form-label"
+                    >Consome alimentos entre as refeições?</label
+                  >
+                  <select class="form-select" id="caec" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="Never">Nunca</option>
+                    <option value="Sometimes">Às vezes</option>
+                    <option value="Frequently">Frequentemente</option>
+                    <option value="Always">Sempre</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="calc" class="form-label">Consumo de álcool</label>
+                  <select class="form-select" id="calc" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="Never">Nunca</option>
+                    <option value="Sometimes">Às vezes</option>
+                    <option value="Frequently">Frequentemente</option>
+                    <option value="Always">Sempre</option>
+                  </select>
+                </div>
+
+                <div class="mb-3">
+                  <label for="mtrans" class="form-label"
+                    >Meio de transporte principal</label
+                  >
+                  <select class="form-select" id="mtrans" required>
+                    <option value="" disabled selected>Selecione</option>
+                    <option value="Automobile">Automóvel</option>
+                    <option value="Bike">Bicicleta</option>
+                    <option value="Motorbike">Moto</option>
+                    <option value="Public_Transportation">
+                      Transporte Público
+                    </option>
+                    <option value="Walking">Caminhando</option>
+                  </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mt-3">
+                  Prever
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header bg-primary text-white">
+              <h5>Resultado da Predição</h5>
+            </div>
+            <div class="card-body">
+              <div
+                id="result"
+                class="alert alert-info"
+                style="display: none"
+              ></div>
+              <div id="predictionDetails" style="display: none">
+                <h6>Detalhes:</h6>
+                <ul id="predictionList" class="list-group"></ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gráficos de Estatísticas -->
+          <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+              <h5>Distribuição Geral</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="predictionChart" width="400" height="250"></canvas>
+              <div class="mt-3">
+                <p class="mb-1">
+                  Total de predições realizadas:
+                  <strong id="totalPredictions">0</strong>
+                </p>
+                <p class="mb-1">
+                  Última atualização: <span id="lastUpdate"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+              <h5>Distribuição por Gênero</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="genderChart" width="400" height="250"></canvas>
+            </div>
+          </div>
+
+          <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+              <h5>Distribuição por Idade</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="ageChart" width="400" height="250"></canvas>
+            </div>
+          </div>
+
+          <div class="card mt-4">
+            <div class="card-header bg-primary text-white">
+              <h5>Atividade Física vs. Peso</h5>
+            </div>
+            <div class="card-body">
+              <canvas id="activityChart" width="400" height="250"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+    <script src="dashboard.js"></script>
+  </body>
+</html>
